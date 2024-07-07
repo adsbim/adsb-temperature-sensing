@@ -1,0 +1,19 @@
+[Unit]
+Description=ADS-B Feeder Temperature Service
+After=adsb-setup.service
+Requires=pigpiod.service
+
+[Service]
+SyslogIdentifier=adsb-temperature
+WorkingDirectory=/opt/adsb/extras
+ExecStart=/opt/adsb/extras/adsbim/bin/python3 /opt/adsb/extras/temperature.py
+Restart=always
+Type=simple
+RestartSec=5
+StartLimitInterval=1
+StartLimitBurst=100
+StandardOutput=append:/opt/adsb/adsb-setup.log
+StandardError=append:/opt/adsb/adsb-setup.log
+
+[Install]
+WantedBy=multi-user.target
